@@ -61,7 +61,6 @@ def DetectLineSlope(src):
     except:
         degree_R = 0
 
-    # 원본에 합성
     mimg = cv2.addWeighted(src, 1, ccan, 1, 0)
     return mimg, degree_L, degree_R
 
@@ -71,8 +70,7 @@ cap = cv2.VideoCapture(0)
 while cap.isOpened():
 
     ret, frame = cap.read()
-    # 상하좌우 반전
-    frame = cv2.flip(frame, 0)
+    frame = cv2.flip(frame, 1)
 
     if ret:
         frame = cv2.resize(frame, (640, 360))
@@ -83,18 +81,22 @@ while cap.isOpened():
             if l == 0 or r == 0:
                 if l < 0 or r < 0:
                     print('left')
+                    # topic message --> left
                 elif l > 0 or r > 0:
                     print('right')
+                    # topic message --> right
             elif abs(l - 15) > abs(r):
                 print('right')
+                # topic message --> right
             elif abs(r + 15) > abs(l):
                 print('left')
+                # topic message --> left
             else:
                 print('go')
         else:
-            if l > 155 or r > 155:
+            if l > 150 or r > 150:
                 print('hard right')
-            elif l < -155 or r < -155:
+            elif l < -150 or r < -150:
                 print('hard left')
 
         if cv2.waitKey(1) & 0xff == ord('q'):
