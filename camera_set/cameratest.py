@@ -1,20 +1,17 @@
-from posixpath import ismount
 import cv2
-while True:
-    cap = cv2.VideoCapture(0)
 
-    while cap.isOpened():
-        print('read')
-        ret, img = cap.read()
-        print(ret)
-        if ret:
-            print("camera found")
-            cv2.imshow('camera-0',img)
-            if cv2.waitKey(1) & 0xFF == 27:
-                break
-        else:
-            print('no camera')
-            break
-    break
+# open camera
+cap = cv2.VideoCapture('/dev/AMA0', cv2.CAP_V4L)
+print('camera open')
+# set dimensions
+cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+# take frame
+ret, frame = cap.read()
+print(frame)
+
+# write frame to file
+cv2.imwrite('AMAimage.jpg', frame)
+# release camera
 cap.release()
-cv2.destroyAllWindows()
