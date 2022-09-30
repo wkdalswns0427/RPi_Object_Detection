@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import cv2
 while True:
     cap = cv2.VideoCapture('/dev/AMA0', cv2.CAP_V4L)
